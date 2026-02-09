@@ -1,196 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>For Rhea</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For Rhea ❤️</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Parisienne&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500&display=swap');
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  height: 100vh;
+  min-height: 100vh;
   background:
-    #f7f3ee
-    url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    radial-gradient(circle at top, #f6d1dc 0%, #fbe7ec 40%, #fff 100%),
+    url('https://www.transparenttextures.com/patterns/paper-fibers.png');
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: #5a2a2a;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
   overflow: hidden;
 }
 
-/* Card */
-#card {
-  background:
-    #fff
-    url("https://www.transparenttextures.com/patterns/crumpled-paper.png");
-  padding: 60px 70px;
-  border-radius: 18px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+.container {
+  background: rgba(255,255,255,0.9);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.15);
   text-align: center;
-  max-width: 520px;
-  transition: all 1.2s ease;
-}
-
-/* Name */
-#name {
-  font-family: 'Parisienne', cursive;
-  font-size: 3.2rem;
-  margin-bottom: 20px;
-}
-
-/* Heart */
-#heart {
+  max-width: 420px;
+  width: 90%;
   position: relative;
-  width: 240px;
-  height: 220px;
-  margin: 0 auto 30px;
 }
 
-.dot {
-  position: absolute;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: rgba(180, 50, 70, 0.85);
-  transition: transform 0.8s ease;
-}
-
-/* Text */
-#question {
+h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
-  margin-bottom: 30px;
+  font-size: 36px;
+  margin-bottom: 10px;
 }
 
-/* Buttons */
-#buttons {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
+p {
+  font-size: 18px;
+  margin: 20px 0;
+}
+
+.buttons {
+  margin-top: 20px;
 }
 
 button {
-  background: transparent;
-  border: 1px solid #b55;
-  color: #7a2e2e;
-  padding: 10px 26px;
+  padding: 12px 22px;
+  margin: 8px;
+  border: none;
   border-radius: 30px;
-  font-size: 1rem;
+  font-size: 16px;
   cursor: pointer;
-  transition: all 0.35s ease;
+  transition: all 0.3s ease;
+}
+
+.yes {
+  background: #ff6b9c;
+  color: white;
+}
+
+.no {
+  background: #ddd;
 }
 
 button:hover {
-  background: rgba(180,50,70,0.08);
+  transform: scale(1.05);
 }
 
-#finalMessage {
-  display: none;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.6rem;
-  margin-top: 20px;
-  animation: ink 1.8s ease forwards;
+svg {
+  width: 220px;
+  margin: 20px auto;
 }
 
-@keyframes ink {
-  from { opacity: 0; filter: blur(4px); }
-  to { opacity: 1; filter: blur(0); }
+.heart-dot {
+  fill: #d24c6a;
+  transition: opacity 0.5s ease;
+}
+
+.crack {
+  opacity: 0.3;
+}
+
+.hearts span {
+  position: fixed;
+  bottom: -20px;
+  animation: float 8s linear infinite;
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 0.6; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+.final {
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
 
 <body>
 
-<div id="card">
-  <div id="name">Rhea</div>
+<div class="container" id="card">
+  <h1>Rhea</h1>
 
-  <div id="heart"></div>
+  <svg viewBox="0 0 200 180" id="heart">
+    <g id="dots"></g>
+  </svg>
 
-  <div id="question">Will you be my Valentine?</div>
+  <p id="text">Will you be my Valentine?</p>
 
-  <div id="buttons">
-    <button id="yesBtn">Yes</button>
-    <button id="noBtn">No</button>
-  </div>
-
-  <div id="finalMessage">
-    This was always meant to be 💗
+  <div class="buttons" id="buttons">
+    <button class="yes" onclick="yes()">Yes</button>
+    <button class="no" onclick="no()">No</button>
   </div>
 </div>
 
+<div class="hearts" id="hearts"></div>
+
 <script>
-const heart = document.getElementById("heart");
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const question = document.getElementById("question");
-const buttons = document.getElementById("buttons");
-const finalMessage = document.getElementById("finalMessage");
+const dots = document.getElementById('dots');
+const text = document.getElementById('text');
+const buttons = document.getElementById('buttons');
 
 let noCount = 0;
 
-/* Cleaner heart curve */
-const heartPoints = [];
-for (let t = 0; t < Math.PI * 2; t += 0.25) {
-  const x = 120 + 80 * Math.pow(Math.sin(t), 3);
-  const y = 100 - (
-    50 * Math.cos(t)
-    - 20 * Math.cos(2 * t)
-    - 10 * Math.cos(3 * t)
+// Heart shape equation
+for (let i = 0; i < 300; i++) {
+  const t = Math.random() * Math.PI * 2;
+  const r = Math.sqrt(Math.random());
+
+  const x = 100 + r * 80 * Math.pow(Math.sin(t), 3);
+  const y = 90 - r * (
+    60 * Math.cos(t)
+    - 20 * Math.cos(2*t)
+    - 10 * Math.cos(3*t)
+    - 5 * Math.cos(4*t)
   );
-  heartPoints.push([x, y]);
+
+  const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  c.setAttribute("cx", x);
+  c.setAttribute("cy", y);
+  c.setAttribute("r", 2);
+  c.classList.add("heart-dot");
+  dots.appendChild(c);
 }
 
-/* Build fingerprint dots */
-heartPoints.forEach(p => {
-  for (let i = 0; i < 4; i++) {
-    const dot = document.createElement("div");
-    dot.className = "dot";
-    dot.style.left = p[0] + (Math.random()*6 - 3) + "px";
-    dot.style.top = p[1] + (Math.random()*6 - 3) + "px";
-    dot.dataset.ox = dot.style.left;
-    dot.dataset.oy = dot.style.top;
-    heart.appendChild(dot);
-  }
-});
-
-function breakHeart(intensity) {
-  document.querySelectorAll(".dot").forEach(d => {
-    d.style.transform =
-      `translate(${(Math.random()*12-6)*intensity}px,
-                 ${(Math.random()*12-6)*intensity}px)`;
+function crackHeart(level) {
+  document.querySelectorAll('.heart-dot').forEach((d,i)=>{
+    if (i % level === 0) d.classList.add('crack');
   });
 }
 
-noBtn.addEventListener("click", () => {
+function repairHeart() {
+  document.querySelectorAll('.heart-dot').forEach(d=>d.classList.remove('crack'));
+}
+
+function no() {
   noCount++;
 
-  if (noCount <= 3) {
-    breakHeart(noCount);
-    question.innerText = ["Are you sure?", "It hurts a little…", "Please don’t…"][noCount-1];
+  if (noCount === 1) {
+    crackHeart(4);
+    text.textContent = "Hmm… that hurts a little.";
+  } else if (noCount === 2) {
+    crackHeart(2);
+    text.textContent = "Careful… it’s starting to crack.";
+  } else {
+    text.textContent = "It’s about to break… do you want to fix it?";
+    buttons.innerHTML = `
+      <button class="yes" onclick="fix()">Fix it</button>
+      <button class="no" onclick="dramatic()">Don’t be dramatic</button>
+    `;
   }
-  else {
-    question.innerText = "It’s about to break… do you want to fix it?";
-    noBtn.innerText = "Let it break";
-    yesBtn.innerText = "Fix it";
-  }
-});
+}
 
-yesBtn.addEventListener("click", () => {
-  question.style.display = "none";
-  buttons.style.display = "none";
-  finalMessage.style.display = "block";
+function dramatic() {
+  repairHeart();
+  crackHeart(6);
+  text.textContent = "See? I knew you wouldn’t actually let it break.";
+  buttons.innerHTML = `
+    <button class="yes" onclick="confirm()">Yes</button>
+  `;
+}
 
-  document.querySelectorAll(".dot").forEach(d => {
-    d.style.transform = "translate(0,0)";
-  });
+function fix() {
+  repairHeart();
+  confirm();
+}
 
-  document.getElementById("card").style.boxShadow =
-    "0 40px 80px rgba(180,50,70,0.35)";
-});
+function confirm() {
+  text.textContent = "So you really want to be my Valentine, huh?";
+  buttons.innerHTML = `
+    <button class="yes" onclick="yes()">Yes</button>
+  `;
+}
+
+function yes() {
+  document.getElementById('card').innerHTML = `
+    <div class="final">
+      <h1>Happy Valentine’s Day ❤️</h1>
+      <p>You just made my heart whole.</p>
+    </div>
+  `;
+}
+
+// floating hearts
+setInterval(()=>{
+  const h = document.createElement('span');
+  h.textContent = '❤';
+  h.style.left = Math.random()*100 + 'vw';
+  h.style.animationDuration = (6+Math.random()*4)+'s';
+  document.getElementById('hearts').appendChild(h);
+  setTimeout(()=>h.remove(),10000);
+},400);
 </script>
 
 </body>
