@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Rhea</title>
 
 <style>
@@ -32,6 +33,7 @@ body {
   box-shadow: 0 30px 60px rgba(0,0,0,0.12);
   text-align: center;
   max-width: 520px;
+  width: 90%;
   transition: all 1.2s ease;
 }
 
@@ -71,6 +73,7 @@ body {
   display: flex;
   justify-content: center;
   gap: 25px;
+  flex-wrap: wrap;
 }
 
 button {
@@ -101,15 +104,10 @@ button:hover {
   to { opacity: 1; filter: blur(0); }
 }
 
-/* 📱 MOBILE FRIENDLY ADDITION */
+/* Mobile */
 @media (max-width: 600px) {
-  body {
-    padding: 15px;
-  }
-
   #card {
-    padding: 40px 25px;
-    max-width: 100%;
+    padding: 40px 30px;
   }
 
   #name {
@@ -117,31 +115,18 @@ button:hover {
   }
 
   #heart {
-    width: 180px;
-    height: 165px;
     transform: scale(0.85);
-    margin-bottom: 25px;
   }
 
   #question {
-    font-size: 1.1rem;
-  }
-
-  #buttons {
-    gap: 18px;
-    flex-wrap: wrap;
+    font-size: 1.15rem;
   }
 
   button {
     padding: 10px 22px;
     font-size: 0.95rem;
   }
-
-  #finalMessage {
-    font-size: 1.35rem;
-  }
 }
-/* 📱 END MOBILE FRIENDLY ADDITION */
 </style>
 </head>
 
@@ -174,7 +159,7 @@ const finalMessage = document.getElementById("finalMessage");
 
 let noCount = 0;
 
-/* Cleaner heart curve */
+/* Clean heart curve */
 const heartPoints = [];
 for (let t = 0; t < Math.PI * 2; t += 0.25) {
   const x = 120 + 80 * Math.pow(Math.sin(t), 3);
@@ -186,15 +171,13 @@ for (let t = 0; t < Math.PI * 2; t += 0.25) {
   heartPoints.push([x, y]);
 }
 
-/* Build fingerprint dots */
+/* Fingerprint dots */
 heartPoints.forEach(p => {
   for (let i = 0; i < 4; i++) {
     const dot = document.createElement("div");
     dot.className = "dot";
     dot.style.left = p[0] + (Math.random()*6 - 3) + "px";
     dot.style.top = p[1] + (Math.random()*6 - 3) + "px";
-    dot.dataset.ox = dot.style.left;
-    dot.dataset.oy = dot.style.top;
     heart.appendChild(dot);
   }
 });
@@ -212,12 +195,21 @@ noBtn.addEventListener("click", () => {
 
   if (noCount <= 3) {
     breakHeart(noCount);
-    question.innerText = ["Are you sure?", "It hurts a little…", "Please don’t…"][noCount-1];
+    question.innerText = ["Are you sure?", "It hurts a little…", "Please don’t…"][noCount - 1];
   }
-  else {
+  else if (noCount === 4) {
     question.innerText = "It’s about to break… do you want to fix it?";
     noBtn.innerText = "Don’t be dramatic";
     yesBtn.innerText = "Fix it";
+  }
+  else if (noCount === 5) {
+    question.innerText = "See… I knew you wouldn’t let it break.";
+    noBtn.style.display = "none";
+    yesBtn.innerText = "So… you want to fix it?";
+
+    document.querySelectorAll(".dot").forEach(d => {
+      d.style.transform = "translate(0,0)";
+    });
   }
 });
 
