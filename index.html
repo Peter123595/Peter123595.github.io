@@ -22,6 +22,7 @@ body {
   overflow: hidden;
 }
 
+/* Card */
 #card {
   background:
     #fff
@@ -34,12 +35,14 @@ body {
   transition: all 1.2s ease;
 }
 
+/* Name */
 #name {
   font-family: 'Parisienne', cursive;
   font-size: 3.2rem;
   margin-bottom: 20px;
 }
 
+/* Heart */
 #heart {
   position: relative;
   width: 240px;
@@ -56,12 +59,14 @@ body {
   transition: transform 0.8s ease;
 }
 
+/* Text */
 #question {
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
   margin-bottom: 30px;
 }
 
+/* Buttons */
 #buttons {
   display: flex;
   justify-content: center;
@@ -95,6 +100,48 @@ button:hover {
   from { opacity: 0; filter: blur(4px); }
   to { opacity: 1; filter: blur(0); }
 }
+
+/* 📱 MOBILE FRIENDLY ADDITION */
+@media (max-width: 600px) {
+  body {
+    padding: 15px;
+  }
+
+  #card {
+    padding: 40px 25px;
+    max-width: 100%;
+  }
+
+  #name {
+    font-size: 2.6rem;
+  }
+
+  #heart {
+    width: 180px;
+    height: 165px;
+    transform: scale(0.85);
+    margin-bottom: 25px;
+  }
+
+  #question {
+    font-size: 1.1rem;
+  }
+
+  #buttons {
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  button {
+    padding: 10px 22px;
+    font-size: 0.95rem;
+  }
+
+  #finalMessage {
+    font-size: 1.35rem;
+  }
+}
+/* 📱 END MOBILE FRIENDLY ADDITION */
 </style>
 </head>
 
@@ -102,6 +149,7 @@ button:hover {
 
 <div id="card">
   <div id="name">Rhea</div>
+
   <div id="heart"></div>
 
   <div id="question">Will you be my Valentine?</div>
@@ -112,7 +160,7 @@ button:hover {
   </div>
 
   <div id="finalMessage">
-  You &amp; I were always meant to be 💗
+    You & I were always meant to be 💗
   </div>
 </div>
 
@@ -125,9 +173,8 @@ const buttons = document.getElementById("buttons");
 const finalMessage = document.getElementById("finalMessage");
 
 let noCount = 0;
-let stage = 0;
 
-/* Heart curve */
+/* Cleaner heart curve */
 const heartPoints = [];
 for (let t = 0; t < Math.PI * 2; t += 0.25) {
   const x = 120 + 80 * Math.pow(Math.sin(t), 3);
@@ -139,7 +186,7 @@ for (let t = 0; t < Math.PI * 2; t += 0.25) {
   heartPoints.push([x, y]);
 }
 
-/* Build dots */
+/* Build fingerprint dots */
 heartPoints.forEach(p => {
   for (let i = 0; i < 4; i++) {
     const dot = document.createElement("div");
@@ -160,48 +207,31 @@ function breakHeart(intensity) {
   });
 }
 
-function healHeart(amount = 0) {
-  document.querySelectorAll(".dot").forEach(d => {
-    d.style.transform =
-      `translate(${(Math.random()*4-2)*amount}px,
-                 ${(Math.random()*4-2)*amount}px)`;
-  });
-}
-
 noBtn.addEventListener("click", () => {
-  if (stage === 0) {
-    noCount++;
-    if (noCount <= 3) {
-      breakHeart(noCount);
-      question.innerText =
-        ["Are you sure?", "It hurts a little…", "Please don’t…"][noCount-1];
-    } else {
-      stage = 1;
-      question.innerText = "It’s about to break… do you want to fix it?";
-      yesBtn.innerText = "Fix it";
-      noBtn.innerText = "Don’t be dramatic";
-    }
-  } else if (stage === 1) {
-    stage = 2;
-    question.innerText = "See… I knew you wouldn’t actually let it break.";
-    healHeart(1);
-    noBtn.style.display = "none";
-    yesBtn.innerText = "Yes";
+  noCount++;
+
+  if (noCount <= 3) {
+    breakHeart(noCount);
+    question.innerText = ["Are you sure?", "It hurts a little…", "Please don’t…"][noCount-1];
+  }
+  else {
+    question.innerText = "It’s about to break… do you want to fix it?";
+    noBtn.innerText = "Don’t be dramatic";
+    yesBtn.innerText = "Fix it";
   }
 });
 
 yesBtn.addEventListener("click", () => {
-  if (stage === 2) {
-    stage = 3;
-    question.innerText = "So you really wanna be my Valentine huh?";
-  } else {
-    question.style.display = "none";
-    buttons.style.display = "none";
-    finalMessage.style.display = "block";
-    document.querySelectorAll(".dot").forEach(d => d.style.transform = "translate(0,0)");
-    document.getElementById("card").style.boxShadow =
-      "0 40px 80px rgba(180,50,70,0.35)";
-  }
+  question.style.display = "none";
+  buttons.style.display = "none";
+  finalMessage.style.display = "block";
+
+  document.querySelectorAll(".dot").forEach(d => {
+    d.style.transform = "translate(0,0)";
+  });
+
+  document.getElementById("card").style.boxShadow =
+    "0 40px 80px rgba(180,50,70,0.35)";
 });
 </script>
 
