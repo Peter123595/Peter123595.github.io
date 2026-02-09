@@ -1,233 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Rhea ✨</title>
+  <meta charset="UTF-8" />
+  <title>For Rhea 💖</title>
 
-<!-- Elegant fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        radial-gradient(circle at top, #2b1055, #000),
+        linear-gradient(135deg, #ff5fa2, #ff9ecf);
+      color: white;
+    }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at top, #2b1055, #12002f 70%);
-}
+    /* stars */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("https://www.transparenttextures.com/patterns/stardust.png");
+      opacity: 0.5;
+      animation: twinkle 10s linear infinite;
+    }
 
-/* ===== STAR LAYER ===== */
-.stars {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background-image:
-    radial-gradient(1px 1px at 10% 20%, white, transparent),
-    radial-gradient(1px 1px at 80% 30%, white, transparent),
-    radial-gradient(1px 1px at 50% 70%, white, transparent),
-    radial-gradient(1px 1px at 20% 80%, white, transparent),
-    radial-gradient(1px 1px at 90% 90%, white, transparent);
-  background-size: 200px 200px;
-  animation: twinkle 10s linear infinite;
-  pointer-events: none;
-}
+    @keyframes twinkle {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
+    }
 
-@keyframes twinkle {
-  from { opacity: 0.6; }
-  50% { opacity: 1; }
-  to { opacity: 0.6; }
-}
+    #card {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 50px;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      box-shadow: 0 0 60px rgba(255, 100, 180, 0.5);
+      max-width: 500px;
+      transition: all 1s ease;
+    }
 
-/* ===== HEARTS ===== */
-.heart {
-  position: fixed;
-  color: rgba(255, 120, 170, 0.7);
-  font-size: 16px;
-  animation: floatUp linear forwards;
-  pointer-events: none;
-}
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
 
-@keyframes floatUp {
-  from {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-120vh) scale(1.4);
-    opacity: 0;
-  }
-}
+    #buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
 
-/* ===== MAIN CARD ===== */
-.container {
-  position: relative;
-  z-index: 5;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    button {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.card {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(18px);
-  padding: 60px 70px;
-  border-radius: 28px;
-  text-align: center;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-  transition: all 1.2s ease;
-}
+    #yesBtn {
+      background: #ff4d88;
+      color: white;
+    }
 
-.card.yes-theme {
-  background: rgba(255,255,255,0.15);
-  transform: scale(1.05);
-}
+    #noBtn {
+      background: #444;
+      color: white;
+      position: relative;
+    }
 
-/* ===== TEXT ===== */
-.name {
-  font-family: 'Playfair Display', serif;
-  font-size: 64px;
-  color: #ffd6f0;
-  margin-bottom: 20px;
-  letter-spacing: 2px;
-}
+    #finalMessage {
+      display: none;
+      font-size: 2rem;
+      margin-top: 20px;
+      animation: fadeIn 2s ease forwards;
+    }
 
-.question {
-  font-size: 22px;
-  color: #ffffff;
-  margin-bottom: 40px;
-}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-/* ===== BUTTONS ===== */
-.buttons {
-  position: relative;
-  height: 80px;
-}
+    /* hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: float 6s linear infinite;
+      opacity: 0.8;
+    }
 
-button {
-  padding: 14px 34px;
-  border-radius: 40px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.4s ease;
-}
-
-#yesBtn {
-  background: linear-gradient(135deg, #ff7ab6, #ff4f9a);
-  color: white;
-  box-shadow: 0 10px 30px rgba(255, 100, 170, 0.5);
-}
-
-#noBtn {
-  background: rgba(255,255,255,0.15);
-  color: white;
-  position: absolute;
-  left: 60%;
-}
-
-.hidden {
-  display: none;
-}
-
-/* ===== FINAL MESSAGE ===== */
-.final {
-  font-size: 26px;
-  color: #ffe6f6;
-  margin-top: 30px;
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from { text-shadow: 0 0 10px #ff8ecf; }
-  to { text-shadow: 0 0 30px #ffb3e6; }
-}
-</style>
+    @keyframes float {
+      from {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-120vh) translateX(40px);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="stars"></div>
+  <div id="card">
+    <h1 id="question">Rhea, will you be my Valentine? 💖</h1>
 
-<div class="container">
-  <div class="card" id="card">
-    <div class="name">Rhea</div>
-    <div class="question" id="question">Will you be my Valentine?</div>
-
-    <div class="buttons">
-      <button id="yesBtn" class="hidden">Yes 💖</button>
-      <button id="noBtn">No</button>
+    <div id="buttons">
+      <button id="yesBtn">Yes 💕</button>
+      <button id="noBtn">No 😏</button>
     </div>
 
-    <div class="final hidden" id="finalMsg">
-      You’re officially my Valentine 💕
-    </div>
+    <h2 id="finalMessage">
+      You didn’t just say yes…  
+      you made this universe brighter ✨💖
+    </h2>
   </div>
-</div>
 
-<script>
-const noBtn = document.getElementById('noBtn');
-const yesBtn = document.getElementById('yesBtn');
-const question = document.getElementById('question');
-const finalMsg = document.getElementById('finalMsg');
-const card = document.getElementById('card');
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const question = document.getElementById("question");
+    const buttons = document.getElementById("buttons");
+    const finalMessage = document.getElementById("finalMessage");
 
-const quirky = [
-  "Are you absolutely sure?",
-  "Think again… stars are watching 🌌",
-  "That button feels wrong, doesn’t it?",
-  "Last chance before destiny intervenes ✨",
-  "Okay… now you HAVE to say yes 💖"
-];
+    let noCount = 0;
+    const quirky = [
+      "Are you sure? 👀",
+      "Hmm… think again 😌",
+      "The stars say no 🌌",
+      "Last chance 😏",
+      "Okay you’re lying 😘"
+    ];
 
-let count = 0;
+    noBtn.addEventListener("click", () => {
+      if (noCount < quirky.length) {
+        noBtn.innerText = quirky[noCount];
+        noBtn.style.transform = `translate(${Math.random()*40-20}px, ${Math.random()*20-10}px)`;
+        noCount++;
+      } else {
+        noBtn.style.display = "none";
+      }
+    });
 
-/* NO button dodge */
-noBtn.addEventListener('mouseenter', () => {
-  const x = Math.random() * 60 + 10;
-  const y = Math.random() * 40 + 20;
-  noBtn.style.left = `${x}%`;
-  noBtn.style.top = `${y}px`;
-});
+    yesBtn.addEventListener("click", () => {
+      question.style.display = "none";
+      buttons.style.display = "none";
+      finalMessage.style.display = "block";
+      document.body.style.background =
+        "radial-gradient(circle at top, #ff9ecf, #ff2f92)";
+    });
 
-/* NO click logic */
-noBtn.addEventListener('click', () => {
-  question.textContent = quirky[count];
-  count++;
+    // hearts
+    setInterval(() => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+      document.body.appendChild(heart);
 
-  if (count >= quirky.length) {
-    noBtn.classList.add('hidden');
-    yesBtn.classList.remove('hidden');
-    question.textContent = "Alright… this is fate 💫";
-  }
-});
-
-/* YES click */
-yesBtn.addEventListener('click', () => {
-  card.classList.add('yes-theme');
-  question.classList.add('hidden');
-  yesBtn.classList.add('hidden');
-  finalMsg.classList.remove('hidden');
-});
-
-/* Smooth hearts */
-setInterval(() => {
-  const heart = document.createElement('div');
-  heart.className = 'heart';
-  heart.textContent = '♥';
-  heart.style.left = Math.random() * 100 + 'vw';
-  heart.style.animationDuration = Math.random() * 5 + 6 + 's';
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 12000);
-}, 450);
-</script>
+      setTimeout(() => heart.remove(), 7000);
+    }, 300);
+  </script>
 
 </body>
 </html>
