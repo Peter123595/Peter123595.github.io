@@ -7,9 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Parisienne&display=swap');
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -26,7 +24,9 @@ body {
 
 /* Card */
 #card {
-  background: rgba(255,255,255,0.65);
+  background:
+    #fff
+    url("https://www.transparenttextures.com/patterns/crumpled-paper.png");
   padding: 60px 70px;
   border-radius: 18px;
   box-shadow: 0 30px 60px rgba(0,0,0,0.12);
@@ -42,24 +42,24 @@ body {
   margin-bottom: 20px;
 }
 
-/* Heart made of dots */
+/* Heart */
 #heart {
   position: relative;
-  width: 220px;
-  height: 200px;
+  width: 240px;
+  height: 220px;
   margin: 0 auto 30px;
 }
 
 .dot {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: rgba(180, 50, 70, 0.85);
-  transition: transform 0.6s ease;
+  transition: transform 0.8s ease;
 }
 
-/* Question */
+/* Text */
 #question {
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
@@ -97,14 +97,8 @@ button:hover {
 }
 
 @keyframes ink {
-  from {
-    opacity: 0;
-    filter: blur(4px);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0);
-  }
+  from { opacity: 0; filter: blur(4px); }
+  to { opacity: 1; filter: blur(0); }
 }
 </style>
 </head>
@@ -138,40 +132,50 @@ const finalMessage = document.getElementById("finalMessage");
 
 let noCount = 0;
 
-const noTexts = [
-  "Are you sure?",
-  "Maybe think again…",
-  "That heart disagrees",
-  "Still no?"
-];
+/* Cleaner heart curve */
+const heartPoints = [];
+for (let t = 0; t < Math.PI * 2; t += 0.25) {
+  const x = 120 + 80 * Math.pow(Math.sin(t), 3);
+  const y = 100 - (
+    50 * Math.cos(t)
+    - 20 * Math.cos(2 * t)
+    - 10 * Math.cos(3 * t)
+  );
+  heartPoints.push([x, y]);
+}
 
-/* build fingerprint-style heart */
-const points = [
-  [110,30],[95,25],[80,30],[65,45],[55,65],[60,85],[75,100],[95,115],[110,130],
-  [125,115],[145,100],[160,85],[165,65],[155,45],[140,30],[125,25]
-];
-
-points.forEach(p => {
-  for (let i = 0; i < 5; i++) {
+/* Build fingerprint dots */
+heartPoints.forEach(p => {
+  for (let i = 0; i < 4; i++) {
     const dot = document.createElement("div");
     dot.className = "dot";
-    dot.style.left = p[0] + (Math.random()*8 - 4) + "px";
-    dot.style.top = p[1] + (Math.random()*8 - 4) + "px";
-    dot.style.opacity = 0.6 + Math.random()*0.4;
+    dot.style.left = p[0] + (Math.random()*6 - 3) + "px";
+    dot.style.top = p[1] + (Math.random()*6 - 3) + "px";
+    dot.dataset.ox = dot.style.left;
+    dot.dataset.oy = dot.style.top;
     heart.appendChild(dot);
   }
 });
 
+function breakHeart(intensity) {
+  document.querySelectorAll(".dot").forEach(d => {
+    d.style.transform =
+      `translate(${(Math.random()*12-6)*intensity}px,
+                 ${(Math.random()*12-6)*intensity}px)`;
+  });
+}
+
 noBtn.addEventListener("click", () => {
-  if (noCount < noTexts.length) {
-    question.innerText = noTexts[noCount];
-    document.querySelectorAll(".dot").forEach(d => {
-      d.style.transform = `translate(${Math.random()*6-3}px, ${Math.random()*6-3}px)`;
-    });
-    noCount++;
-  } else {
-    noBtn.style.display = "none";
-    yesBtn.innerText = "Okay… Yes";
+  noCount++;
+
+  if (noCount <= 3) {
+    breakHeart(noCount);
+    question.innerText = ["Are you sure?", "It hurts a little…", "Please don’t…"][noCount-1];
+  }
+  else {
+    question.innerText = "It’s about to break… do you want to fix it?";
+    noBtn.innerText = "Let it break";
+    yesBtn.innerText = "Fix it";
   }
 });
 
@@ -179,6 +183,11 @@ yesBtn.addEventListener("click", () => {
   question.style.display = "none";
   buttons.style.display = "none";
   finalMessage.style.display = "block";
+
+  document.querySelectorAll(".dot").forEach(d => {
+    d.style.transform = "translate(0,0)";
+  });
+
   document.getElementById("card").style.boxShadow =
     "0 40px 80px rgba(180,50,70,0.35)";
 });
