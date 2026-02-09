@@ -13,21 +13,16 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    #f7f3ee
-    url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  background: #f7f3ee url("https://www.transparenttextures.com/patterns/paper-fibers.png");
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #5a2a2a;
   overflow: hidden;
+  color: #5a2a2a;
 }
 
-/* Card */
 #card {
-  background:
-    #fff
-    url("https://www.transparenttextures.com/patterns/crumpled-paper.png");
+  background: #fff url("https://www.transparenttextures.com/patterns/crumpled-paper.png");
   padding: 60px 70px;
   border-radius: 18px;
   box-shadow: 0 30px 60px rgba(0,0,0,0.12);
@@ -37,14 +32,12 @@ body {
   transition: all 1.2s ease;
 }
 
-/* Name */
 #name {
   font-family: 'Parisienne', cursive;
   font-size: 3.2rem;
   margin-bottom: 20px;
 }
 
-/* Heart */
 #heart {
   position: relative;
   width: 240px;
@@ -57,18 +50,16 @@ body {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: rgba(180, 50, 70, 0.85);
+  background: rgba(180,50,70,0.85);
   transition: transform 0.8s ease;
 }
 
-/* Text */
 #question {
   font-family: 'Playfair Display', serif;
   font-size: 1.3rem;
   margin-bottom: 30px;
 }
 
-/* Buttons */
 #buttons {
   display: flex;
   justify-content: center;
@@ -80,7 +71,7 @@ button {
   background: transparent;
   border: 1px solid #b55;
   color: #7a2e2e;
-  padding: 12px 28px;
+  padding: 10px 26px;
   border-radius: 30px;
   font-size: 1rem;
   cursor: pointer;
@@ -104,6 +95,7 @@ button:hover {
   to { opacity: 1; filter: blur(0); }
 }
 
+/* Mobile */
 @media (max-width: 600px) {
   #card { padding: 40px 30px; }
   #name { font-size: 2.6rem; }
@@ -117,7 +109,6 @@ button:hover {
 <div id="card">
   <div id="name">Rhea</div>
   <div id="heart"></div>
-
   <div id="question">Will you be my Valentine?</div>
 
   <div id="buttons">
@@ -125,116 +116,92 @@ button:hover {
     <button id="noBtn">No</button>
   </div>
 
-  <div id="finalMessage">
-    You & I were always meant to be 💗
-  </div>
+  <div id="finalMessage">You & I were always meant to be 💗</div>
 </div>
 
 <script>
 const heart = document.getElementById("heart");
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
 const question = document.getElementById("question");
 const buttons = document.getElementById("buttons");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
 const finalMessage = document.getElementById("finalMessage");
 
 let state = 0;
 
 /* Heart shape */
-const heartPoints = [];
+const points = [];
 for (let t = 0; t < Math.PI * 2; t += 0.25) {
   const x = 120 + 80 * Math.pow(Math.sin(t), 3);
-  const y = 100 - (
-    50 * Math.cos(t)
-    - 20 * Math.cos(2 * t)
-    - 10 * Math.cos(3 * t)
-  );
-  heartPoints.push([x, y]);
+  const y = 100 - (50 * Math.cos(t) - 20 * Math.cos(2*t) - 10 * Math.cos(3*t));
+  points.push([x,y]);
 }
 
-/* Build dots */
-heartPoints.forEach(p => {
+points.forEach(p => {
   for (let i = 0; i < 4; i++) {
-    const dot = document.createElement("div");
-    dot.className = "dot";
-    dot.style.left = p[0] + (Math.random()*6 - 3) + "px";
-    dot.style.top = p[1] + (Math.random()*6 - 3) + "px";
-    heart.appendChild(dot);
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.style.left = p[0] + (Math.random()*6-3) + "px";
+    d.style.top = p[1] + (Math.random()*6-3) + "px";
+    heart.appendChild(d);
   }
 });
 
 function breakHeart(intensity) {
   document.querySelectorAll(".dot").forEach(d => {
-    d.style.transform =
-      `translate(${(Math.random()*12-6)*intensity}px,
-                 ${(Math.random()*12-6)*intensity}px)`;
+    d.style.transform = `translate(${(Math.random()*12-6)*intensity}px, ${(Math.random()*12-6)*intensity}px)`;
   });
 }
 
-function repairHeart(amount) {
+function repairHeart(level) {
   document.querySelectorAll(".dot").forEach(d => {
-    d.style.transform =
-      `translate(${(Math.random()*4-2)*amount}px,
-                 ${(Math.random()*4-2)*amount}px)`;
+    d.style.transform = `translate(${(Math.random()*3-1.5)*level}px, ${(Math.random()*3-1.5)*level}px)`;
   });
 }
 
-/* NO button */
-noBtn.addEventListener("click", () => {
-  if (state === 0) {
+noBtn.onclick = () => {
+  state++;
+
+  if (state === 1) {
+    breakHeart(1);
+    question.innerText = "Are you sure?";
+  } else if (state === 2) {
     breakHeart(2);
+    question.innerText = "It hurts a little…";
+  } else if (state === 3) {
+    breakHeart(3);
+    question.innerText = "Please don’t…";
+  } else {
+    breakHeart(4);
     question.innerText = "It’s about to break… do you want to fix it?";
     yesBtn.innerText = "Fix it";
     noBtn.innerText = "Don’t be dramatic";
-    state = 1;
+  }
+};
+
+yesBtn.onclick = () => {
+  if (state < 4) {
+    finish();
+    return;
   }
 
-  else if (state === 1) {
+  if (noBtn.innerText === "Don’t be dramatic") {
     repairHeart(1);
-    question.innerText = "See? I knew you wouldn’t actually let it break.";
-    noBtn.style.display = "none";
-    yesBtn.innerText = "Yes";
-    state = 2;
-
-    setTimeout(() => {
-      question.innerText = "So… that means you do want to fix it, right?";
-    }, 1600);
+    question.innerText = "See? I knew you wouldn’t actually let it break.\n\nSo… that means you do want to fix it, right?";
+    buttons.innerHTML = `<button id="onlyYes">Yes</button>`;
+    document.getElementById("onlyYes").onclick = () => {
+      question.innerText = "So you really want to be my Valentine, huh?";
+      buttons.innerHTML = `<button id="finalYes">Yes</button>`;
+      document.getElementById("finalYes").onclick = finish;
+    };
   }
-});
+};
 
-/* YES button */
-yesBtn.addEventListener("click", () => {
-
-  if (state === 0) {
-    showFinal();
-  }
-
-  else if (state === 1) {
-    showFinal();
-  }
-
-  else if (state === 2) {
-    question.innerText = "So you really want to be my Valentine, huh?";
-    yesBtn.innerText = "Yes";
-    state = 3;
-  }
-
-  else if (state === 3) {
-    showFinal();
-  }
-});
-
-function showFinal() {
+function finish() {
   question.style.display = "none";
   buttons.style.display = "none";
   finalMessage.style.display = "block";
-
-  document.querySelectorAll(".dot").forEach(d => {
-    d.style.transform = "translate(0,0)";
-  });
-
-  document.getElementById("card").style.boxShadow =
-    "0 40px 80px rgba(180,50,70,0.35)";
+  document.querySelectorAll(".dot").forEach(d => d.style.transform = "translate(0,0)");
 }
 </script>
 
