@@ -1,215 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>For Rhea 💖</title>
+<meta charset="UTF-8">
+<title>For Rhea</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Parisienne&display=swap');
 
-    body {
-      margin: 0;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background:
-        radial-gradient(circle at top, #2b1055, #000),
-        linear-gradient(135deg, #ff5fa2, #ff9ecf);
-      color: white;
-      transition: background 1.5s ease;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    /* star + heart texture */
-    body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        url("https://www.transparenttextures.com/patterns/stardust.png"),
-        radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
-      background-size: 300px 300px, 40px 40px;
-      opacity: 0.45;
-      animation: twinkle 12s linear infinite;
-      z-index: 0;
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  background:
+    #f7f3ee
+    url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5a2a2a;
+  overflow: hidden;
+}
 
-    @keyframes twinkle {
-      from { background-position: 0 0, 0 0; }
-      to { background-position: 1000px 1000px, 200px 200px; }
-    }
+/* Card */
+#card {
+  background: rgba(255,255,255,0.65);
+  padding: 60px 70px;
+  border-radius: 18px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+  text-align: center;
+  max-width: 520px;
+  transition: all 1.2s ease;
+}
 
-    #card {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      padding: 50px;
-      backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 26px;
-      box-shadow: 0 0 70px rgba(255, 100, 180, 0.45);
-      max-width: 520px;
-      transition: all 1.2s ease;
-    }
+/* Name */
+#name {
+  font-family: 'Parisienne', cursive;
+  font-size: 3.2rem;
+  margin-bottom: 20px;
+}
 
-    h1 {
-      font-size: 2.6rem;
-      margin-bottom: 30px;
-    }
+/* Heart made of dots */
+#heart {
+  position: relative;
+  width: 220px;
+  height: 200px;
+  margin: 0 auto 30px;
+}
 
-    #buttons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
+.dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(180, 50, 70, 0.85);
+  transition: transform 0.6s ease;
+}
 
-    button {
-      padding: 15px 34px;
-      font-size: 1.2rem;
-      border-radius: 40px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.35s ease;
-    }
+/* Question */
+#question {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+}
 
-    #yesBtn {
-      background: #ff4d88;
-      color: white;
-      box-shadow: 0 0 20px rgba(255,77,136,0.6);
-    }
+/* Buttons */
+#buttons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
 
-    #noBtn {
-      background: #444;
-      color: white;
-      position: relative;
-    }
+button {
+  background: transparent;
+  border: 1px solid #b55;
+  color: #7a2e2e;
+  padding: 10px 26px;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
 
-    #finalMessage {
-      display: none;
-      font-size: 2rem;
-      margin-top: 20px;
-      animation: fadeIn 2s ease forwards;
-    }
+button:hover {
+  background: rgba(180,50,70,0.08);
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.92); }
-      to { opacity: 1; transform: scale(1); }
-    }
+#finalMessage {
+  display: none;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-top: 20px;
+  animation: ink 1.8s ease forwards;
+}
 
-    /* floating hearts */
-    .heart {
-      position: absolute;
-      bottom: -20px;
-      font-size: 18px;
-      animation: float 6s linear infinite;
-      opacity: 0.8;
-    }
-
-    @keyframes float {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(-120vh); opacity: 0; }
-    }
-
-    /* shooting stars */
-    .shooting-star {
-      position: absolute;
-      width: 120px;
-      height: 2px;
-      background: linear-gradient(90deg, white, transparent);
-      animation: shoot 1.2s ease-out forwards;
-      opacity: 0.8;
-    }
-
-    @keyframes shoot {
-      from {
-        transform: translateX(0) translateY(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateX(300px) translateY(200px);
-        opacity: 0;
-      }
-    }
-  </style>
+@keyframes ink {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div id="card">
-    <h1 id="question">Rhea, will you be my Valentine? 💖</h1>
+<div id="card">
+  <div id="name">Rhea</div>
 
-    <div id="buttons">
-      <button id="yesBtn">Yes 💕</button>
-      <button id="noBtn">No 😏</button>
-    </div>
+  <div id="heart"></div>
 
-    <h2 id="finalMessage">
-      You didn’t just say yes…  
-      you aligned the stars ✨💖
-    </h2>
+  <div id="question">Will you be my Valentine?</div>
+
+  <div id="buttons">
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
   </div>
 
-  <script>
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const question = document.getElementById("question");
-    const buttons = document.getElementById("buttons");
-    const finalMessage = document.getElementById("finalMessage");
+  <div id="finalMessage">
+    This was always meant to be 💗
+  </div>
+</div>
 
-    let noCount = 0;
-    const quirky = [
-      "Are you sure? 👀",
-      "Hmm… think again 😌",
-      "The universe disagrees 🌌",
-      "Still no? suspicious 😏"
-    ];
+<script>
+const heart = document.getElementById("heart");
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const question = document.getElementById("question");
+const buttons = document.getElementById("buttons");
+const finalMessage = document.getElementById("finalMessage");
 
-    noBtn.addEventListener("click", () => {
-      if (noCount < quirky.length) {
-        noBtn.innerText = quirky[noCount];
-        noBtn.style.transform = `translate(${Math.random()*30-15}px, ${Math.random()*20-10}px)`;
-        noCount++;
-      } else {
-        noBtn.style.display = "none";
-        yesBtn.innerText = "Okay… Yes 💖";
-        yesBtn.style.transform = "scale(1.15)";
-      }
+let noCount = 0;
+
+const noTexts = [
+  "Are you sure?",
+  "Maybe think again…",
+  "That heart disagrees",
+  "Still no?"
+];
+
+/* build fingerprint-style heart */
+const points = [
+  [110,30],[95,25],[80,30],[65,45],[55,65],[60,85],[75,100],[95,115],[110,130],
+  [125,115],[145,100],[160,85],[165,65],[155,45],[140,30],[125,25]
+];
+
+points.forEach(p => {
+  for (let i = 0; i < 5; i++) {
+    const dot = document.createElement("div");
+    dot.className = "dot";
+    dot.style.left = p[0] + (Math.random()*8 - 4) + "px";
+    dot.style.top = p[1] + (Math.random()*8 - 4) + "px";
+    dot.style.opacity = 0.6 + Math.random()*0.4;
+    heart.appendChild(dot);
+  }
+});
+
+noBtn.addEventListener("click", () => {
+  if (noCount < noTexts.length) {
+    question.innerText = noTexts[noCount];
+    document.querySelectorAll(".dot").forEach(d => {
+      d.style.transform = `translate(${Math.random()*6-3}px, ${Math.random()*6-3}px)`;
     });
+    noCount++;
+  } else {
+    noBtn.style.display = "none";
+    yesBtn.innerText = "Okay… Yes";
+  }
+});
 
-    yesBtn.addEventListener("click", () => {
-      question.style.display = "none";
-      buttons.style.display = "none";
-      finalMessage.style.display = "block";
-
-      document.body.style.background =
-        "radial-gradient(circle at top, #3b1d66, #120018), linear-gradient(135deg, #ff6fae, #ffc1dc)";
-
-      // shooting stars
-      for (let i = 0; i < 6; i++) {
-        const star = document.createElement("div");
-        star.className = "shooting-star";
-        star.style.top = Math.random() * 50 + "vh";
-        star.style.left = Math.random() * 50 + "vw";
-        document.body.appendChild(star);
-        setTimeout(() => star.remove(), 1500);
-      }
-    });
-
-    // hearts
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "💖";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
-    }, 300);
-  </script>
+yesBtn.addEventListener("click", () => {
+  question.style.display = "none";
+  buttons.style.display = "none";
+  finalMessage.style.display = "block";
+  document.getElementById("card").style.boxShadow =
+    "0 40px 80px rgba(180,50,70,0.35)";
+});
+</script>
 
 </body>
 </html>
