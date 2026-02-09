@@ -1,179 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Rhea 💖</title>
+  <meta charset="UTF-8" />
+  <title>Rhea 💖</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Elegant fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-<style>
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    height: 100vh;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(120deg, #ff758c, #ff7eb3, #ffd1dc);
-    background-size: 400% 400%;
-    animation: gradient 10s ease infinite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  .card {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    padding: 40px;
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    max-width: 420px;
-  }
-
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    color: #fff;
-    margin-bottom: 10px;
-  }
-
-  h2 {
-    color: #fff;
-    font-weight: 400;
-    margin-bottom: 30px;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  button {
-    padding: 12px 26px;
-    border-radius: 30px;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  #yesBtn {
-    background: #ff4f7b;
-    color: #fff;
-  }
-
-  #yesBtn:hover {
-    transform: scale(1.1);
-    background: #ff2f63;
-  }
-
-  #noBtn {
-    background: #fff;
-    color: #ff4f7b;
-  }
-
-  #message {
-    margin-top: 25px;
-    color: #fff;
-    font-size: 1.1rem;
-    min-height: 40px;
-  }
-
-  .heart {
-    position: absolute;
-    font-size: 20px;
-    animation: float 6s linear infinite;
-    opacity: 0.6;
-  }
-
-  @keyframes float {
-    from {
-      transform: translateY(100vh) scale(1);
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    to {
-      transform: translateY(-10vh) scale(1.4);
+
+    body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top left, #2b0f1a, #0f0c1d);
+      color: #fff;
+      transition: background 1.8s ease;
     }
-  }
-</style>
+
+    body.valentine-yes {
+      background: radial-gradient(circle at center, #3a0f2e, #05010d);
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: all 1.5s ease;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeIn 1.8s forwards;
+    }
+
+    p {
+      font-size: 1.2rem;
+      max-width: 500px;
+      opacity: 0.85;
+      margin-bottom: 2.5rem;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    button {
+      padding: 14px 36px;
+      border-radius: 40px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+
+    .yes {
+      background: linear-gradient(135deg, #ff6fae, #ff9ecf);
+      color: #2b0f1a;
+    }
+
+    .no {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+    }
+
+    button:hover {
+      transform: scale(1.08);
+    }
+
+    .message {
+      margin-top: 2rem;
+      font-size: 1.4rem;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .message.show {
+      opacity: 1;
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 18px;
+      animation: floatUp linear forwards;
+      opacity: 0.6;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 0.6;
+      }
+      to {
+        transform: translateY(-120vh) scale(1.8);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Transition glow on YES */
+    body.valentine-yes h1 {
+      color: #ffb7dd;
+      text-shadow: 0 0 25px rgba(255,183,221,0.4);
+      transition: all 1.5s ease;
+    }
+
+  </style>
 </head>
-
 <body>
 
-<div class="card">
-  <h1>Rhea 💖</h1>
-  <h2>Will you be my Valentine?</h2>
+  <div class="container">
+    <h1>Rhea</h1>
+    <p>Would you make this Valentine’s Day unforgettable with me?</p>
 
-  <div class="buttons">
-    <button id="yesBtn">Yes 💕</button>
-    <button id="noBtn">No 🙈</button>
+    <div class="buttons">
+      <button class="yes" onclick="yesClicked()">Yes</button>
+      <button class="no" onclick="noClicked()">No</button>
+    </div>
+
+    <div class="message" id="message"></div>
   </div>
 
-  <div id="message"></div>
-</div>
+  <script>
+    const noMessages = [
+      "Are you absolutely sure?",
+      "Like… emotionally sure?",
+      "Rhea, think again 😌",
+      "This decision may cause extreme happiness",
+      "Okay but imagine us laughing about this later?"
+    ];
 
-<script>
-  const messages = [
-    "Are you sure? Think carefully 😌",
-    "Hmm… that didn’t feel right 😏",
-    "This button is getting shy, try again 😳",
-    "Okay but imagine saying yes 🥹",
-    "Plot twist: you actually want to say yes 💘",
-    "I double-checked… still waiting for yes 👀",
-    "Your heart says yes, your finger is confused ❤️",
-    "Last warning: smiles incoming if you say yes 😄",
-    "Alright, I’ll ask nicely… pretty please? 🌸"
-  ];
+    let noCount = 0;
 
-  let clickCount = 0;
-  const messageDiv = document.getElementById("message");
-  const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
-
-  noBtn.addEventListener("click", () => {
-    clickCount++;
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-    messageDiv.textContent = randomMessage;
-
-    noBtn.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 50 - 25}px)`;
-
-    if (clickCount >= 5) {
-      messageDiv.textContent = "Okay okay… enough drama 😌 Just say yes 💕";
-      noBtn.style.display = "none";
+    function noClicked() {
+      const msg = document.getElementById('message');
+      msg.textContent = noMessages[Math.min(noCount, noMessages.length - 1)];
+      msg.classList.add('show');
+      noCount++;
     }
-  });
 
-  yesBtn.addEventListener("click", () => {
-    messageDiv.innerHTML = "Congratulations, you’re officially my Valentine 💖✨";
-    noBtn.style.display = "none";
-    yesBtn.style.display = "none";
-  });
+    function yesClicked() {
+      document.body.classList.add('valentine-yes');
 
-  // floating hearts
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.textContent = "💗";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = 4 + Math.random() * 4 + "s";
-    document.body.appendChild(heart);
+      const msg = document.getElementById('message');
+      msg.textContent = "I was hoping you’d say that 💖";
+      msg.classList.add('show');
 
-    setTimeout(() => {
-      heart.remove();
-    }, 8000);
-  }, 500);
-</script>
+      startSparkleMode();
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 8000);
+    }
+
+    setInterval(createHeart, 400);
+
+    function startSparkleMode() {
+      setInterval(() => {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'heart';
+        sparkle.textContent = '✦';
+        sparkle.style.left = Math.random() * 100 + 'vw';
+        sparkle.style.fontSize = '14px';
+        sparkle.style.opacity = '0.4';
+        sparkle.style.animationDuration = '6s';
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 7000);
+      }, 600);
+    }
+  </script>
 
 </body>
 </html>
